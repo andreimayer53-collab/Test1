@@ -3,193 +3,406 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>20-Fragen Farbtest</title>
+  <title>Business Farbtest – 20 Fragen</title>
+  <!-- Fonts & Base Styles -->
   <style>
-    :root { --bg:#f9fafb; --card:#ffffff; --text:#111827; --muted:#6b7280; --primary:#2563eb; --border:#e5e7eb; }
-    * { box-sizing: border-box; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
-    .container { max-width: 900px; margin: 0 auto; padding: 24px; }
-    .card { background: var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:0 1px 2px rgba(0,0,0,.04); margin-bottom:16px; }
-    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    @media (max-width:720px){ .row{ grid-template-columns:1fr; } }
-    label { font-size:14px; color:#374151; display:block; margin-bottom:6px; }
-    input[type="text"], input[type="number"], input[type="email"], select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#fff; }
-    .radio-group { display:flex; gap:12px; flex-wrap:wrap; }
-    .radio { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:999px; background:#fff; cursor:pointer; }
-    .buttons { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
-    .btn { padding:10px 16px; border:none; border-radius:10px; cursor:pointer; font-size:16px; background:var(--border); }
-    .btn.primary { background:var(--primary); color:#fff; }
-    .btn.ghost { background:transparent; border:1px solid var(--border); }
-    .question { margin-bottom:16px; padding:14px; border:1px solid var(--border); border-radius:12px; background:#fff; }
-    .options label { display:block; margin:6px 0; cursor:pointer; }
-    #result { display:none; }
-    .bar { height:18px; border-radius:6px; margin:6px 0; }
-    .bar-label { display:flex; justify-content:space-between; font-size:14px; }
-    .pill { display:inline-block; background:#f3f4f6; border:1px solid var(--border); border-radius:999px; padding:4px 10px; font-size:12px; color:#374151; }
-    .footer-note { font-size:12px; color:#6b7280; }
+    :root{
+      --bg:#f9f9f7;
+      --card:#ffffff;
+      --ink:#111111;
+      --muted:#6b7280;
+      --gold:#d4af37;
+      --primary:#111111;
+      --border:#e5e7eb;
+      --red:#ef4444; --green:#22c55e; --blue:#3b82f6; --yellow:#eab308;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}
+    .container{max-width:900px;margin:0 auto;padding:24px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;box-shadow:0 1px 2px rgba(0,0,0,.04);margin-bottom:16px}
+    h1{margin:0 0 8px 0;text-align:center;font-weight:700}
+    .subtitle{color:var(--muted);text-align:center;margin:0 0 20px}
+    label{font-size:14px;color:#222}
+    input[type=text],input[type=number],input[type=email],select{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:#fff}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    @media (max-width:720px){.row,.row3{grid-template-columns:1fr}}
+    .radio-line{display:flex;gap:12px;flex-wrap:wrap}
+    .radio-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--border);border-radius:999px;background:#fff;cursor:pointer}
+    .pill{display:inline-block;background:#f3f4f6;border:1px solid var(--border);border-radius:999px;padding:4px 10px;font-size:12px;color:#374151}
+    .btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+    .btn{padding:10px 16px;border:none;border-radius:10px;cursor:pointer;font-size:16px;background:#eee}
+    .btn.primary{background:var(--ink);color:#fff}
+    .btn.secondary{background:#e5e7eb}
+    .btn:disabled{opacity:.5;cursor:not-allowed}
+    .hint{font-size:12px;color:var(--muted)}
+    .disclaimer{font-size:12px;color:#4b5563}
+    .error{color:#991b1b;background:#fef2f2;border:1px solid #fecaca;padding:10px;border-radius:10px;margin-top:10px;display:none}
+    /* Question view */
+    .q-title{color:var(--gold);font-size:20px;font-weight:700;margin:2px 0 12px}
+    .opt{display:flex;align-items:center;gap:10px;margin:8px 0;padding:10px;border:1px solid var(--border);border-radius:10px;background:#fff;cursor:pointer}
+    .opt input{transform:scale(1.2)}
+    .dot{width:12px;height:12px;border-radius:999px;display:inline-block}
+    .dot.red{background:var(--red)} .dot.green{background:var(--green)} .dot.blue{background:var(--blue)} .dot.yellow{background:var(--yellow)}
+    .progress{font-size:12px;color:var(--muted)}
+    /* Results bars */
+    .bar-wrap{margin:6px 0;background:#f3f4f6;border-radius:6px;height:20px;position:relative;overflow:hidden;border:1px solid var(--border)}
+    .bar{height:100%}
+    .lbl{display:flex;justify-content:space-between}
+    .legend{font-size:14px;margin-top:10px}
+    .legend span{margin-right:12px;display:inline-flex;align-items:center;gap:6px}
+    .cert-note{font-size:12px;color:var(--muted);margin-top:8px}
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="card">
-      <h1>Interaktiver 20-Fragen Farbtest</h1>
-      <p>Beantworte jede Frage spontan. Mehrfachauswahl ist erlaubt.<br/>
-      a = <b style="color:green">Grün</b>, b = <b style="color:red">Rot</b>, c = <b style="color:blue">Blau</b>, d = <b style="color:gold">Gelb</b>.</p>
+<div class="container">
+  <h1>Business Farbtest</h1>
+  <p class="subtitle" id="subtitle">Wähle spontan. Mehrfachauswahl ist erlaubt – die Reihenfolge zählt.</p>
 
-      <div class="pill">Schritt 1 von 3: Angaben</div>
-      <div id="form-step" class="card" style="margin-top:12px;">
-        <div class="row">
-          <div>
-            <label for="name">Name *</label>
-            <input id="name" type="text" placeholder="Max Mustermann" />
-          </div>
-          <div>
-            <label for="age">Alter</label>
-            <input id="age" type="number" min="0" max="120" placeholder="32" />
-          </div>
-        </div>
-        <div class="row">
-          <div>
-            <label>Geschlecht</label>
-            <div class="radio-group" role="radiogroup" aria-label="Geschlecht">
-              <label class="radio"><input type="radio" name="gender" value="männlich"> männlich</label>
-              <label class="radio"><input type="radio" name="gender" value="weiblich"> weiblich</label>
-              <label class="radio"><input type="radio" name="gender" value="nonbinär"> nonbinär</label>
-            </div>
-          </div>
-          <div>
-            <label for="email">E-Mail *</label>
-            <input id="email" type="email" placeholder="max@example.com" />
-          </div>
-        </div>
-        <p class="footer-note">Hinweis: Eine Kopie des Resultats wird automatisch auch an <b>Andrei Mayer</b> (zu Testzwecken) an <b>andreimayer53@gmail.com</b> gesendet.</p>
-        <div class="buttons">
-          <button class="btn primary" id="startBtn">Zu den Fragen</button>
+  <!-- Step 1: Intake -->
+  <div class="card" id="step-intake">
+    <div class="pill" id="step1-label">Schritt 1 von 3: Anmeldung</div>
+    <div class="row" style="margin-top:12px">
+      <div>
+        <label id="label-last">Nachname *</label>
+        <input id="lastName" type="text" placeholder="Muster" />
+      </div>
+      <div>
+        <label id="label-first">Vorname *</label>
+        <input id="firstName" type="text" placeholder="Max" />
+      </div>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <div>
+        <label id="label-age">Alter *</label>
+        <input id="age" type="number" min="10" max="120" placeholder="32" />
+      </div>
+      <div>
+        <label id="label-email">E-Mail *</label>
+        <input id="email" type="email" placeholder="max@example.com" />
+      </div>
+    </div>
+    <div class="row3" style="margin-top:12px">
+      <div>
+        <label id="label-gender">Geschlecht *</label>
+        <div class="radio-line" role="radiogroup" aria-label="Gender">
+          <label class="radio-pill"><input type="radio" name="gender" value="männlich" /> <span id="g-m">männlich</span></label>
+          <label class="radio-pill"><input type="radio" name="gender" value="weiblich" /> <span id="g-w">weiblich</span></label>
+          <label class="radio-pill"><input type="radio" name="gender" value="nonbinär" /> <span id="g-n">nonbinär</span></label>
         </div>
       </div>
-
-      <div id="quiz-step" class="card" style="display:none; margin-top:12px;">
-        <div class="pill">Schritt 2 von 3: Fragen</div>
-        <div id="questions" style="margin-top:12px;"></div>
-        <div class="buttons">
-          <button class="btn ghost" id="backBtn">Zurück</button>
-          <button class="btn primary" id="calcBtn">Ergebnis berechnen</button>
-          <button class="btn" id="resetBtn">Zurücksetzen</button>
+      <div>
+        <label id="label-lang">Sprache</label>
+        <div class="radio-line" role="radiogroup" aria-label="Language">
+          <label class="radio-pill"><input type="radio" name="lang" value="de" checked /> Deutsch</label>
+          <label class="radio-pill"><input type="radio" name="lang" value="en" /> English</label>
         </div>
       </div>
-
-      <div id="result-step" class="card" style="display:none; margin-top:12px;">
-        <div class="pill">Schritt 3 von 3: Ergebnis</div>
-        <div id="result" style="margin-top:12px;"></div>
-        <div class="buttons">
-          <button class="btn ghost" id="againBtn">Nochmals ausfüllen</button>
-        </div>
+      <div>
+        <label>&nbsp;</label>
+        <div class="hint" id="hint-multi">Mehrfachauswahl ist erlaubt. Die Reihenfolge der Klicks bestimmt die Gewichtung.</div>
       </div>
+    </div>
+    <div id="intake-error" class="error"></div>
+    <p class="disclaimer" id="copy-note">Hinweis: Eine Kopie des Ergebnisses wird zu Testzwecken an <b>business.color.selftest@gmail.com</b> gesendet.</p>
+    <div class="btns">
+      <button class="btn primary" id="btn-start">Start</button>
     </div>
   </div>
 
+  <!-- Step 2: Questions -->
+  <div class="card" id="step-quiz" style="display:none">
+    <div class="pill" id="step2-label">Schritt 2 von 3: Fragen</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+      <div class="progress" id="progress">Frage 1/20</div>
+      <div class="legend">
+        <span><span class="dot red"></span>Rot</span>
+        <span><span class="dot green"></span>Grün</span>
+        <span><span class="dot blue"></span>Blau</span>
+        <span><span class="dot yellow"></span>Gelb</span>
+      </div>
+    </div>
+    <div style="margin-top:10px">
+      <div class="q-title" id="q-title">Fragetext…</div>
+      <div id="opts"></div>
+    </div>
+    <div id="q-error" class="error"></div>
+    <div class="btns">
+      <button class="btn secondary" id="btn-back">Zurück</button>
+      <button class="btn primary" id="btn-next" disabled>Weiter</button>
+    </div>
+  </div>
+
+  <!-- Step 3: Results -->
+  <div class="card" id="step-result" style="display:none">
+    <div class="pill" id="step3-label">Schritt 3 von 3: Ergebnis</div>
+    <h2 id="res-title" style="margin:12px 0 6px">Dein Farbprofil</h2>
+    <div id="bars"></div>
+    <div id="desc" style="margin-top:12px"></div>
+    <div class="cert-note" id="cert-note">Das Zertifikat-PDF wird generiert und an deine E-Mail gesendet (Kopie an business.color.selftest@gmail.com).</div>
+    <div class="btns">
+      <button class="btn secondary" id="btn-again">Nochmals starten</button>
+      <button class="btn primary" id="btn-download">PDF lokal speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- External libs: jsPDF & EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <script>
-const QUESTIONS = [
-  "Wenn jemand deine Idee öffentlich kritisiert, wie reagierst du?",
-  "Wenn du ein neues Projekt startest, was treibt dich am meisten an?",
-  "Jemand hält sich nicht an Abmachungen – wie reagierst du?",
-  "In einer Gruppe fühlst du dich am wohlsten, wenn …",
-  "Wie gehst du mit Risiken um?",
-  "Neue Leute kennenlernen: wichtig ist mir …",
-  "Schwieriges Problem lösen: ich …",
-  "Konflikte: ich …",
-  "Neues Ziel motiviert mich, weil …",
-  "Misstrauen gegen mich → ich …",
-  "Neue unklare Aufgabe → ich …",
-  "Andere erleben mich meist als …",
-  "Fehler → ich …",
-  "Großes Lebensziel → wichtig ist …",
-  "Plötzliche Veränderung → ich …",
-  "Gruppe kann nicht entscheiden → ich …",
-  "Emotionaler Ausbruch anderer → ich …",
-  "Neues Projekt präsentieren → mir ist wichtig …",
-  "Stress → ich …",
-  "Worauf bist du am meisten stolz?"
-];
-const COLORS = { a: "Grün", b: "Rot", c: "Blau", d: "Gelb" };
-const HEX = { "Grün":"#22c55e", "Rot":"#ef4444", "Blau":"#3b82f6", "Gelb":"#eab308" };
-
-const formStep = document.getElementById("form-step");
-const quizStep = document.getElementById("quiz-step");
-const resultStep = document.getElementById("result-step");
-const startBtn = document.getElementById("startBtn");
-const backBtn = document.getElementById("backBtn");
-const calcBtn = document.getElementById("calcBtn");
-const resetBtn = document.getElementById("resetBtn");
-const againBtn = document.getElementById("againBtn");
-const questionsDiv = document.getElementById("questions");
-const resultDiv = document.getElementById("result");
-
-function renderQuestions(){
-  questionsDiv.innerHTML = "";
-  QUESTIONS.forEach((q,i)=>{
-    const div = document.createElement("div");
-    div.className = "question";
-    div.innerHTML = `<b>${i+1}. ${q}</b>
-      <div class="options">
-        <label><input type="checkbox" name="q${i}" value="a"> a)</label>
-        <label><input type="checkbox" name="q${i}" value="b"> b)</label>
-        <label><input type="checkbox" name="q${i}" value="c"> c)</label>
-        <label><input type="checkbox" name="q${i}" value="d"> d)</label>
-      </div>`;
-    questionsDiv.appendChild(div);
-  });
+/** ===== Config: EmailJS keys (fülle deine IDs) ===== **/
+const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY";
+const EMAILJS_SERVICE_ID  = "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID";
+// EmailJS initialisieren (wenn Keys eingetragen sind)
+if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+  emailjs.init(EMAILJS_PUBLIC_KEY);
 }
 
-startBtn.addEventListener("click", ()=>{
-  // kein Blockieren mehr
-  formStep.style.display = "none";
-  quizStep.style.display = "block";
-  renderQuestions();
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+/** ===== I18N (DE/EN) ===== **/
+const I18N = {
+  de: {
+    ui: {
+      subtitle: "Wähle spontan. Mehrfachauswahl ist erlaubt – die Reihenfolge zählt.",
+      step1: "Schritt 1 von 3: Anmeldung",
+      step2: "Schritt 2 von 3: Fragen",
+      step3: "Schritt 3 von 3: Ergebnis",
+      last: "Nachname *", first: "Vorname *", age: "Alter *", email: "E-Mail *", gender: "Geschlecht *",
+      g_m: "männlich", g_w: "weiblich", g_n: "nonbinär",
+      lang: "Sprache",
+      hintMulti: "Mehrfachauswahl ist erlaubt. Die Reihenfolge der Klicks bestimmt die Gewichtung.",
+      copyNote: "Hinweis: Eine Kopie des Ergebnisses wird zu Testzwecken an <b>business.color.selftest@gmail.com</b> gesendet.",
+      start: "Start", back: "Zurück", next: "Weiter", again: "Nochmals starten", download: "PDF lokal speichern",
+      progress: (i,n)=>`Frage ${i}/${n}`,
+      errors: {
+        intake: "Bitte Nachname, Vorname, Alter, E-Mail und Geschlecht ausfüllen.",
+        question: "Bitte wähle mindestens eine Antwort."
+      },
+      resTitle: "Dein Farbprofil",
+      certNote: "Das Zertifikat-PDF wird generiert und an deine E-Mail gesendet (Kopie an business.color.selftest@gmail.com).",
+      colors: { red:"Rot", green:"Grün", blue:"Blau", yellow:"Gelb" },
+      colorDesc: {
+        red: "Rot (dominant): durchsetzungsstark, zielorientiert, entscheidungsfreudig.",
+        green: "Grün (stetig): kooperativ, geduldig, beziehungsorientiert.",
+        blue: "Blau (gewissenhaft): analytisch, präzise, qualitätsorientiert.",
+        yellow: "Gelb (initiativ): kreativ, kommunikativ, begeisterungsfähig."
+      },
+      pdf: {
+        title: "ZERTIFIKAT – Business Farbtest",
+        participant: "Teilnehmer",
+        details: "Details",
+        date: "Datum",
+        percentages: "Anteile",
+        summary: "Charakterprofil"
+      }
+    },
+    q: [
+      { q:"Wenn jemand deine Idee in einem Meeting öffentlich kritisiert, wie reagierst du?",
+        opts:[
+          {color:"red",   text:"Ich verteidige meine Idee sofort und argumentiere stark."},
+          {color:"green", text:"Ich höre mir die Kritik ruhig an und versuche Verständnis zu zeigen."},
+          {color:"blue",  text:"Ich prüfe sachlich, ob die Kritik fundiert ist."},
+          {color:"yellow",text:"Ich reagiere locker und nehme es mit Humor."}
+        ]},
+      { q:"Wenn du ein neues Projekt startest, was treibt dich am meisten an?",
+        opts:[
+          {color:"red",   text:"Ein messbares Ergebnis und schneller Erfolg."},
+          {color:"green", text:"Gemeinsam im Team etwas Sinnvolles schaffen."},
+          {color:"blue",  text:"Einen klaren Plan entwickeln und Fehler vermeiden."},
+          {color:"yellow",text:"Etwas Neues ausprobieren und Begeisterung wecken."}
+        ]},
+      { q:"Ein Mitarbeiter hält sich nicht an Abmachungen – wie reagierst du?",
+        opts:[
+          {color:"red",   text:"Ich spreche es sofort klar und direkt an."},
+          {color:"green", text:"Ich erinnere freundlich daran und suche das Gespräch."},
+          {color:"blue",  text:"Ich frage nach den Gründen und dokumentiere es."},
+          {color:"yellow",text:"Ich improvisiere und mache pragmatisch weiter."}
+        ]},
+      { q:"In einem Projektteam fühlst du dich am wohlsten, wenn …",
+        opts:[
+          {color:"red",   text:"klare Führung und schnelle Entscheidungen da sind."},
+          {color:"green", text:"Harmonie herrscht und alle an einem Strang ziehen."},
+          {color:"blue",  text:"Strukturen und Regeln eingehalten werden."},
+          {color:"yellow",text:"Kreativität, Abwechslung und Energie spürbar sind."}
+        ]},
+      { q:"Wie gehst du bei einer wichtigen geschäftlichen Entscheidung mit Risiken um?",
+        opts:[
+          {color:"red",   text:"Ich gehe mutig ins Risiko, wenn die Chance groß ist."},
+          {color:"green", text:"Ich überlege, wie es andere betrifft, bevor ich handle."},
+          {color:"blue",  text:"Ich analysiere Risiken gründlich, bevor ich entscheide."},
+          {color:"yellow",text:"Ich probiere es spontan aus und schaue, was passiert."}
+        ]},
+      { q:"Wenn du neue Geschäftskontakte knüpfst, was ist dir am wichtigsten?",
+        opts:[
+          {color:"red",   text:"Kompetenz und Wirkung zu zeigen."},
+          {color:"green", text:"Vertrauen und Sympathie aufzubauen."},
+          {color:"blue",  text:"Verlässlichkeit und Fakten zu erfahren."},
+          {color:"yellow",text:"Begeisterung und positive Stimmung zu schaffen."}
+        ]},
+      { q:"Bei einem komplexen Problem im Job: wie gehst du es an?",
+        opts:[
+          {color:"red",   text:"Ich handle schnell und finde eine pragmatische Lösung."},
+          {color:"green", text:"Ich beziehe andere ein und suche Konsens."},
+          {color:"blue",  text:"Ich zerlege es in Schritte und analysiere systematisch."},
+          {color:"yellow",text:"Ich finde kreative, unkonventionelle Ideen."}
+        ]},
+      { q:"In Konflikten am Arbeitsplatz oder im Projektteam: wie verhältst du dich?",
+        opts:[
+          {color:"red",   text:"Ich gehe in die Konfrontation und setze mich durch."},
+          {color:"green", text:"Ich suche Ausgleich und Frieden."},
+          {color:"blue",  text:"Ich bleibe sachlich und argumentiere nüchtern."},
+          {color:"yellow",text:"Ich versuche es mit Humor zu entschärfen."}
+        ]},
+      { q:"Ein neues Unternehmensziel wird gesetzt – warum motiviert dich das?",
+        opts:[
+          {color:"red",   text:"Ich will beweisen, dass ich es schaffen kann."},
+          {color:"green", text:"Ich möchte, dass unser Team erfolgreich ist."},
+          {color:"blue",  text:"Ich freue mich, meine Kompetenzen strukturiert einzusetzen."},
+          {color:"yellow",text:"Ich finde es spannend, Neues auszuprobieren."}
+        ]},
+      { q:"Ein Kunde oder Kollege zweifelt an deiner Kompetenz – wie reagierst du?",
+        opts:[
+          {color:"red",   text:"Ich stelle klar, dass ich zuverlässig und stark bin."},
+          {color:"green", text:"Ich baue mit Geduld und Vertrauen die Beziehung auf."},
+          {color:"blue",  text:"Ich lege Beweise und Argumente vor."},
+          {color:"yellow",text:"Ich überzeuge mit Offenheit und Charme."}
+        ]},
+      { q:"Du erhältst eine neue, unklare Aufgabe von deinem Vorgesetzten – was machst du zuerst?",
+        opts:[
+          {color:"red",   text:"Ich lege einfach los und entscheide unterwegs."},
+          {color:"green", text:"Ich frage Kollegen um Rat und Unterstützung."},
+          {color:"blue",  text:"Ich sortiere die Fakten und mache einen Plan."},
+          {color:"yellow",text:"Ich probiere verschiedene Ansätze spontan aus."}
+        ]},
+      { q:"Wie beschreiben dich deine Kollegen im Arbeitsalltag am häufigsten?",
+        opts:[
+          {color:"red",   text:"Zielstrebig und entschlossen."},
+          {color:"green", text:"Freundlich und hilfsbereit."},
+          {color:"blue",  text:"Sachlich und genau."},
+          {color:"yellow",text:"Lebendig und kommunikativ."}
+        ]},
+      { q:"Wenn dir bei einem Projekt ein Fehler passiert – wie gehst du damit um?",
+        opts:[
+          {color:"red",   text:"Ich stehe dazu und mache sofort weiter."},
+          {color:"green", text:"Ich entschuldige mich und mache es wieder gut."},
+          {color:"blue",  text:"Ich analysiere gründlich die Ursachen."},
+          {color:"yellow",text:"Ich nehme es locker und gehe kreativ damit um."}
+        ]},
+      { q:"In Bezug auf deine Karriere: was ist dein wichtigstes Lebensziel?",
+        opts:[
+          {color:"red",   text:"Erfolg und Anerkennung."},
+          {color:"green", text:"Harmonie und stabile Beziehungen."},
+          {color:"blue",  text:"Sicherheit und Präzision."},
+          {color:"yellow",text:"Spaß, Freiheit und Abenteuer."}
+        ]},
+      { q:"Dein Unternehmen ändert plötzlich eine wichtige Strategie – wie reagierst du?",
+        opts:[
+          {color:"red",   text:"Ich stelle mich sofort der neuen Situation."},
+          {color:"green", text:"Ich suche Halt und Stabilität."},
+          {color:"blue",  text:"Ich analysiere, welche Anpassungen nötig sind."},
+          {color:"yellow",text:"Ich freue mich auf Neues und gehe locker damit um."}
+        ]},
+      { q:"Dein Team kann sich in einem Meeting nicht auf eine Lösung einigen – was tust du?",
+        opts:[
+          {color:"red",   text:"Ich übernehme die Entscheidung."},
+          {color:"green", text:"Ich suche eine Lösung, die für alle passt."},
+          {color:"blue",  text:"Ich analysiere die Fakten und schlage eine sachliche Lösung vor."},
+          {color:"yellow",text:"Ich bringe spontan eine Idee ein."}
+        ]},
+      { q:"Ein Kollege oder Kunde reagiert sehr emotional – wie verhältst du dich?",
+        opts:[
+          {color:"red",   text:"Ich setze klare Grenzen."},
+          {color:"green", text:"Ich höre zu und zeige Verständnis."},
+          {color:"blue",  text:"Ich bleibe sachlich und distanziert."},
+          {color:"yellow",text:"Ich versuche, die Stimmung aufzuhellen."}
+        ]},
+      { q:"Du präsentierst ein neues Projekt vor Geschäftsleitung oder Kunden – was ist dir dabei am wichtigsten?",
+        opts:[
+          {color:"red",   text:"Stärke und Durchsetzung zu zeigen."},
+          {color:"green", text:"Alle einzubeziehen und Nähe zu schaffen."},
+          {color:"blue",  text:"Fachlich korrekt und logisch zu erklären."},
+          {color:"yellow",text:"Es lebendig, kreativ und spannend zu machen."}
+        ]},
+      { q:"Wenn der Arbeitsdruck hoch und die Deadline nah ist – wie gehst du mit dem Stress um?",
+        opts:[
+          {color:"red",   text:"Ich gebe Vollgas und ziehe durch."},
+          {color:"green", text:"Ich suche Ruhe, Gespräche und Ausgleich."},
+          {color:"blue",  text:"Ich organisiere mich noch genauer."},
+          {color:"yellow",text:"Ich motiviere mich mit Humor und Ablenkung."}
+        ]},
+      { q:"Worauf bist du in deinem Berufsleben am meisten stolz?",
+        opts:[
+          {color:"red",   text:"Auf meine Erfolge und Durchsetzungsstärke."},
+          {color:"green", text:"Auf meine Hilfsbereitschaft und Loyalität."},
+          {color:"blue",  text:"Auf meine Genauigkeit und Verlässlichkeit."},
+          {color:"yellow",text:"Auf meine Kreativität und Lebensfreude."}
+        ]}
+    ]
+  },
+  en: {
+    ui: {
+      subtitle: "Answer spontaneously. Multiple choices allowed — order matters.",
+      step1: "Step 1 of 3: Registration",
+      step2: "Step 2 of 3: Questions",
+      step3: "Step 3 of 3: Result",
+      last: "Last name *", first: "First name *", age: "Age *", email: "Email *", gender: "Gender *",
+      g_m: "male", g_w: "female", g_n: "non-binary",
+      lang: "Language",
+      hintMulti: "You may select multiple options. Click order defines the weight.",
+      copyNote: "Note: A copy of the result is sent for testing to <b>business.color.selftest@gmail.com</b>.",
+      start: "Start", back: "Back", next: "Next", again: "Start again", download: "Save PDF locally",
+      progress: (i,n)=>`Question ${i}/${n}`,
+      errors: {
+        intake: "Please fill last name, first name, age, email and gender.",
+        question: "Please choose at least one option."
+      },
+      resTitle: "Your color profile",
+      certNote: "The certificate PDF will be generated and sent to your email (copy to business.color.selftest@gmail.com).",
+      colors: { red:"Red", green:"Green", blue:"Blue", yellow:"Yellow" },
+      colorDesc: {
+        red: "Red (dominant): assertive, goal-oriented, decisive.",
+        green: "Green (steadiness): cooperative, patient, relationship-oriented.",
+        blue: "Blue (conscientious): analytical, precise, quality-driven.",
+        yellow: "Yellow (influencing): creative, communicative, enthusiastic."
+      },
+      pdf: {
+        title: "CERTIFICATE – Business Color Test",
+        participant: "Participant",
+        details: "Details",
+        date: "Date",
+        percentages: "Percentages",
+        summary: "Profile Summary"
+      }
+    },
+    q: [] // fallback: if needed, we could add English questions later; we keep DE for both if en empty
+  }
+};
 
-backBtn?.addEventListener("click", ()=>{
-  quizStep.style.display = "none";
-  formStep.style.display = "block";
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+// For simplicity, use DE questions for EN too if not provided
+if (!I18N.en.q || I18N.en.q.length === 0) I18N.en.q = I18N.de.q;
 
-calcBtn?.addEventListener("click", ()=>{
-  let tally = { "Grün":0, "Rot":0, "Blau":0, "Gelb":0 };
-  QUESTIONS.forEach((q,i)=>{
-    document.querySelectorAll(`input[name=q${i}]:checked`).forEach(inp=>{
-      tally[COLORS[inp.value]] += 1;
-    });
-  });
-  const total = Object.values(tally).reduce((a,b)=>a+b,0) || 1;
-  let html = `<h2>Dein Farbprofil</h2>`;
-  Object.entries(tally).forEach(([name,val])=>{
-    const pct = (val/total*100).toFixed(1);
-    html += `<div class="bar-label"><span>${name}</span><span>${pct}%</span></div>
-             <div class="bar" style="background:${HEX[name]}; width:${pct}%"></div>`;
-  });
-  html += `<p class="footer-note"><i>Gesamt-Antworten gezählt: ${total}</i></p>`;
-  resultDiv.innerHTML = html;
-  quizStep.style.display="none";
-  resultStep.style.display="block";
-  resultDiv.style.display="block";
-  window.scrollTo({top:0,behavior:"smooth"});
-});
+/** ===== State ===== **/
+let lang = "de";
+let qIndex = 0;
+const selections = []; // per question: ordered array of opt indexes [0..3]
+const totalQ = I18N.de.q.length;
 
-resetBtn?.addEventListener("click", ()=>{
-  document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
-  resultDiv.innerHTML="";
-  resultDiv.style.display="none";
-});
-
-againBtn?.addEventListener("click", ()=>{
-  document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
-  resultDiv.innerHTML="";
-  resultDiv.style.display="none";
-  quizStep.style.display="none";
-  formStep.style.display="block";
-});
-</script>
-</body>
-</html>
+// Elements
+const el = (id)=>document.getElementById(id);
+const E = {
+  subtitle: el("subtitle"),
+  step1: el("step-intake"), step2: el("step-quiz"), step3: el("step-result"),
+  step1Label: el("step1-label"), step2Label: el("step2-label"), step3Label: el("step3-label"),
+  last: el("lastName"), first: el("firstName"), age: el("age"), email: el("email"),
+  gender: ()=>document.querySelector("input[name='gender']:checked"),
+  langRadios: ()=>document.querySelectorAll("input[name='lang']"),
+  labelLast: el("label-last"), labelFirst: el("label-first"), labelAge: el("label-age"), labelEmail: el("label-email"), labelGender: el("label-gender"), labelLang: el("label-lang"),
+  g_m: el("g-m"), g_w: el("g-w"), g_n: el("g-n"),
+  hintMulti: el("hint-multi"), copyNote: el("copy-note"),
+  intakeError: el("intake-error"),
+  qTitle: el("q-title"), opts: el("opts"), progress: el("progress"), qError: el("q-error"),
+  bars: el("bars"), desc: el("desc"), resTitle: el("res-title"), certNote: el("cert-note"),
+  btnStart: el("btn-start"), btnBack: el("btn-back"), btnNext: el("btn-next"),
+  btnAgain: el("btn-ag
