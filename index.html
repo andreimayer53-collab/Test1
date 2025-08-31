@@ -5,54 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>20-Fragen Farbtest</title>
   <style>
-    :root {
-      --bg: #f9fafb;
-      --card: #ffffff;
-      --text: #111827;
-      --muted: #6b7280;
-      --primary: #2563eb;
-      --border: #e5e7eb;
-    }
+    :root { --bg:#f9fafb; --card:#ffffff; --text:#111827; --muted:#6b7280; --primary:#2563eb; --border:#e5e7eb; }
     * { box-sizing: border-box; }
     body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: var(--bg); color: var(--text); margin: 0; }
     .container { max-width: 900px; margin: 0 auto; padding: 24px; }
-    h1,h2,h3 { margin: 0 0 12px; line-height: 1.2; }
-    p { color: var(--muted); }
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-      margin-bottom: 16px;
-    }
-    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 720px) { .row { grid-template-columns: 1fr; } }
-    label { font-size: 14px; color: #374151; display: block; margin-bottom: 6px; }
-    input[type="text"], input[type="number"], input[type="email"], select {
-      width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid var(--border); background: #fff;
-    }
-    .radio-group { display: flex; gap: 12px; flex-wrap: wrap; }
-    .radio { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; background: #fff; cursor: pointer; }
-    .muted { color: var(--muted); font-size: 14px; }
-    .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-    .btn {
-      padding: 10px 16px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px;
-      background: var(--border);
-    }
-    .btn.primary { background: var(--primary); color: #fff; }
-    .btn.ghost { background: transparent; border: 1px solid var(--border); }
-    .question { margin-bottom: 16px; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: #fff; }
-    .options label { display: block; margin: 6px 0; cursor: pointer; }
-    .options input { margin-right: 8px; }
+    .card { background: var(--card); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:0 1px 2px rgba(0,0,0,.04); margin-bottom:16px; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    @media (max-width:720px){ .row{ grid-template-columns:1fr; } }
+    label { font-size:14px; color:#374151; display:block; margin-bottom:6px; }
+    input[type="text"], input[type="number"], input[type="email"], select { width:100%; padding:10px 12px; border-radius:10px; border:1px solid var(--border); background:#fff; }
+    .radio-group { display:flex; gap:12px; flex-wrap:wrap; }
+    .radio { display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border:1px solid var(--border); border-radius:999px; background:#fff; cursor:pointer; }
+    .buttons { display:flex; gap:10px; margin-top:12px; flex-wrap:wrap; }
+    .btn { padding:10px 16px; border:none; border-radius:10px; cursor:pointer; font-size:16px; background:var(--border); }
+    .btn.primary { background:var(--primary); color:#fff; }
+    .btn.ghost { background:transparent; border:1px solid var(--border); }
+    .question { margin-bottom:16px; padding:14px; border:1px solid var(--border); border-radius:12px; background:#fff; }
+    .options label { display:block; margin:6px 0; cursor:pointer; }
     #result { display:none; }
-    .bar { height: 18px; border-radius: 6px; margin: 6px 0; }
-    .bar-label { display: flex; justify-content: space-between; font-size: 14px; }
-    .hr { height: 1px; background: var(--border); margin: 16px 0; }
+    .bar { height:18px; border-radius:6px; margin:6px 0; }
+    .bar-label { display:flex; justify-content:space-between; font-size:14px; }
     .pill { display:inline-block; background:#f3f4f6; border:1px solid var(--border); border-radius:999px; padding:4px 10px; font-size:12px; color:#374151; }
-    .success { color: #065f46; background:#ecfdf5; border:1px solid #a7f3d0; padding:10px; border-radius:10px; }
-    .info { color: #1f2937; background:#eff6ff; border:1px solid #bfdbfe; padding:10px; border-radius:10px; }
-    .error { color: #991b1b; background:#fef2f2; border:1px solid #fecaca; padding:10px; border-radius:10px; }
     .footer-note { font-size:12px; color:#6b7280; }
   </style>
 </head>
@@ -61,22 +34,23 @@
     <div class="card">
       <h1>Interaktiver 20-Fragen Farbtest</h1>
       <p>Beantworte jede Frage spontan. Mehrfachauswahl ist erlaubt.<br/>
-      Zuordnung: a = <b style="color:green">Grün</b>, b = <b style="color:red">Rot</b>, c = <b style="color:blue">Blau</b>, d = <b style="color:gold">Gelb</b>.</p>
+      a = <b style="color:green">Grün</b>, b = <b style="color:red">Rot</b>, c = <b style="color:blue">Blau</b>, d = <b style="color:gold">Gelb</b>.</p>
+
       <div class="pill">Schritt 1 von 3: Angaben</div>
       <div id="form-step" class="card" style="margin-top:12px;">
         <div class="row">
           <div>
             <label for="name">Name *</label>
-            <input id="name" type="text" placeholder="Max Mustermann" required />
+            <input id="name" type="text" placeholder="Max Mustermann" />
           </div>
           <div>
-            <label for="age">Alter *</label>
-            <input id="age" type="number" min="0" max="120" placeholder="32" required />
+            <label for="age">Alter</label>
+            <input id="age" type="number" min="0" max="120" placeholder="32" />
           </div>
         </div>
         <div class="row">
           <div>
-            <label>Geschlecht *</label>
+            <label>Geschlecht</label>
             <div class="radio-group" role="radiogroup" aria-label="Geschlecht">
               <label class="radio"><input type="radio" name="gender" value="männlich"> männlich</label>
               <label class="radio"><input type="radio" name="gender" value="weiblich"> weiblich</label>
@@ -85,14 +59,10 @@
           </div>
           <div>
             <label for="email">E-Mail *</label>
-            <input id="email" type="email" placeholder="max@example.com" required />
+            <input id="email" type="email" placeholder="max@example.com" />
           </div>
         </div>
-        <p class="info">
-          Hinweis: Eine Kopie des Resultats wird automatisch auch an <b>Andrei Mayer</b> (zu Testzwecken) an
-          <b>andreimayer53@gmail.com</b> gesendet.
-        </p>
-        <p class="footer-note">Das PDF wird lokal erzeugt. Für den Versand per E-Mail musst du unten im Code deine <b>EmailJS</b>-Daten eintragen.</p>
+        <p class="footer-note">Hinweis: Eine Kopie des Resultats wird automatisch auch an <b>Andrei Mayer</b> (zu Testzwecken) an <b>andreimayer53@gmail.com</b> gesendet.</p>
         <div class="buttons">
           <button class="btn primary" id="startBtn">Zu den Fragen</button>
         </div>
@@ -111,308 +81,115 @@
       <div id="result-step" class="card" style="display:none; margin-top:12px;">
         <div class="pill">Schritt 3 von 3: Ergebnis</div>
         <div id="result" style="margin-top:12px;"></div>
-        <div class="hr"></div>
-        <div id="sendStatus"></div>
         <div class="buttons">
-          <button class="btn" id="downloadBtn">PDF herunterladen</button>
-          <button class="btn primary" id="emailBtn">PDF an E-Mail senden</button>
           <button class="btn ghost" id="againBtn">Nochmals ausfüllen</button>
         </div>
-        <p class="footer-note">„Schreibgeschützt“: Das PDF enthält keine Formularfelder und ist ohne Editor nicht veränderbar. Strikte Bearbeitungs-Sperren (DRM/Passwort) erfordern einen Server-Workflow.</p>
       </div>
     </div>
   </div>
 
-  <!-- Dependencies -->
-  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+const QUESTIONS = [
+  "Wenn jemand deine Idee öffentlich kritisiert, wie reagierst du?",
+  "Wenn du ein neues Projekt startest, was treibt dich am meisten an?",
+  "Jemand hält sich nicht an Abmachungen – wie reagierst du?",
+  "In einer Gruppe fühlst du dich am wohlsten, wenn …",
+  "Wie gehst du mit Risiken um?",
+  "Neue Leute kennenlernen: wichtig ist mir …",
+  "Schwieriges Problem lösen: ich …",
+  "Konflikte: ich …",
+  "Neues Ziel motiviert mich, weil …",
+  "Misstrauen gegen mich → ich …",
+  "Neue unklare Aufgabe → ich …",
+  "Andere erleben mich meist als …",
+  "Fehler → ich …",
+  "Großes Lebensziel → wichtig ist …",
+  "Plötzliche Veränderung → ich …",
+  "Gruppe kann nicht entscheiden → ich …",
+  "Emotionaler Ausbruch anderer → ich …",
+  "Neues Projekt präsentieren → mir ist wichtig …",
+  "Stress → ich …",
+  "Worauf bist du am meisten stolz?"
+];
+const COLORS = { a: "Grün", b: "Rot", c: "Blau", d: "Gelb" };
+const HEX = { "Grün":"#22c55e", "Rot":"#ef4444", "Blau":"#3b82f6", "Gelb":"#eab308" };
 
-  <script>
-    // ======================= CONFIG: EmailJS =======================
-    const EMAILJS_PUBLIC_KEY = "REPLACE_ME_PUBLIC_KEY";
-    const EMAILJS_SERVICE_ID = "REPLACE_ME_SERVICE_ID";
-    const EMAILJS_TEMPLATE_ID = "REPLACE_ME_TEMPLATE_ID";
+const formStep = document.getElementById("form-step");
+const quizStep = document.getElementById("quiz-step");
+const resultStep = document.getElementById("result-step");
+const startBtn = document.getElementById("startBtn");
+const backBtn = document.getElementById("backBtn");
+const calcBtn = document.getElementById("calcBtn");
+const resetBtn = document.getElementById("resetBtn");
+const againBtn = document.getElementById("againBtn");
+const questionsDiv = document.getElementById("questions");
+const resultDiv = document.getElementById("result");
 
-    // Feste Kopie an Andrei (transparent angekündigt)
-    const OWNER_NAME = "Andrei Mayer";
-    const OWNER_EMAIL = "andreimayer53@gmail.com";
+function renderQuestions(){
+  questionsDiv.innerHTML = "";
+  QUESTIONS.forEach((q,i)=>{
+    const div = document.createElement("div");
+    div.className = "question";
+    div.innerHTML = `<b>${i+1}. ${q}</b>
+      <div class="options">
+        <label><input type="checkbox" name="q${i}" value="a"> a)</label>
+        <label><input type="checkbox" name="q${i}" value="b"> b)</label>
+        <label><input type="checkbox" name="q${i}" value="c"> c)</label>
+        <label><input type="checkbox" name="q${i}" value="d"> d)</label>
+      </div>`;
+    questionsDiv.appendChild(div);
+  });
+}
 
-    if (EMAILJS_PUBLIC_KEY && EMAILJS_PUBLIC_KEY !== "REPLACE_ME_PUBLIC_KEY") {
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
+startBtn.addEventListener("click", ()=>{
+  // kein Blockieren mehr
+  formStep.style.display = "none";
+  quizStep.style.display = "block";
+  renderQuestions();
+  window.scrollTo({top:0,behavior:"smooth"});
+});
 
-    function emailSendingConfigured() {
-      return EMAILJS_PUBLIC_KEY !== "REPLACE_ME_PUBLIC_KEY" &&
-             EMAILJS_SERVICE_ID !== "REPLACE_ME_SERVICE_ID" &&
-             EMAILJS_TEMPLATE_ID !== "REPLACE_ME_TEMPLATE_ID";
-    }
+backBtn?.addEventListener("click", ()=>{
+  quizStep.style.display = "none";
+  formStep.style.display = "block";
+  window.scrollTo({top:0,behavior:"smooth"});
+});
 
-    // ======================= Quiz Data =======================
-    const QUESTIONS = [
-      "Wenn jemand deine Idee öffentlich kritisiert, wie reagierst du?",
-      "Wenn du ein neues Projekt startest, was treibt dich am meisten an?",
-      "Jemand hält sich nicht an Abmachungen – wie reagierst du?",
-      "In einer Gruppe fühlst du dich am wohlsten, wenn …",
-      "Wie gehst du mit Risiken um?",
-      "Neue Leute kennenlernen: wichtig ist mir …",
-      "Schwieriges Problem lösen: ich …",
-      "Konflikte: ich …",
-      "Neues Ziel motiviert mich, weil …",
-      "Misstrauen gegen mich → ich …",
-      "Neue unklare Aufgabe → ich …",
-      "Andere erleben mich meist als …",
-      "Fehler → ich …",
-      "Großes Lebensziel → wichtig ist …",
-      "Plötzliche Veränderung → ich …",
-      "Gruppe kann nicht entscheiden → ich …",
-      "Emotionaler Ausbruch anderer → ich …",
-      "Neues Projekt präsentieren → mir ist wichtig …",
-      "Stress → ich …",
-      "Worauf bist du am meisten stolz?"
-    ];
-
-    const COLORS = { a: "Grün", b: "Rot", c: "Blau", d: "Gelb" };
-    const HEX = { "Grün":"#22c55e", "Rot":"#ef4444", "Blau":"#3b82f6", "Gelb":"#eab308" };
-
-    // ======================= UI Logic =======================
-    const formStep = document.getElementById("form-step");
-    const quizStep = document.getElementById("quiz-step");
-    const resultStep = document.getElementById("result-step");
-
-    const startBtn = document.getElementById("startBtn");
-    const backBtn = document.getElementById("backBtn");
-    const calcBtn = document.getElementById("calcBtn");
-    const resetBtn = document.getElementById("resetBtn");
-    const againBtn = document.getElementById("againBtn");
-    const downloadBtn = document.getElementById("downloadBtn");
-    const emailBtn = document.getElementById("emailBtn");
-
-    const questionsDiv = document.getElementById("questions");
-    const resultDiv = document.getElementById("result");
-    const sendStatus = document.getElementById("sendStatus");
-
-    function renderQuestions() {
-      questionsDiv.innerHTML = "";
-      QUESTIONS.forEach((q, i) => {
-        const div = document.createElement("div");
-        div.className = "question";
-        div.innerHTML = \`
-          <b>\${i+1}. \${q}</b>
-          <div class="options">
-            <label><input type="checkbox" name="q\${i}" value="a"> a)</label>
-            <label><input type="checkbox" name="q\${i}" value="b"> b)</label>
-            <label><input type="checkbox" name="q\${i}" value="c"> c)</label>
-            <label><input type="checkbox" name="q\${i}" value="d"> d)</label>
-          </div>\`;
-        questionsDiv.appendChild(div);
-      });
-    }
-
-    function validateForm() {
-      const name = document.getElementById("name").value.trim();
-      const age = document.getElementById("age").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const gender = (document.querySelector("input[name='gender']:checked") || {}).value;
-
-      const errors = [];
-      if (!name) errors.push("Name ist erforderlich.");
-      if (!age) errors.push("Alter ist erforderlich.");
-      if (!gender) errors.push("Geschlecht ist erforderlich.");
-      if (!email || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) errors.push("Gültige E-Mail ist erforderlich.");
-      return { ok: errors.length === 0, errors, name, age, email, gender };
-    }
-
-    function calculate() {
-      let tally = { "Grün":0, "Rot":0, "Blau":0, "Gelb":0 };
-      QUESTIONS.forEach((q, i) => {
-        const inputs = document.querySelectorAll(\`input[name=q\${i}]:checked\`);
-        inputs.forEach(inp => {
-          const color = COLORS[inp.value];
-          tally[color] += 1;
-        });
-      });
-      const total = Object.values(tally).reduce((a,b)=>a+b,0) || 1;
-
-      let html = \`<h2>Dein Farbprofil</h2>\`;
-      Object.entries(tally).forEach(([name,val])=>{
-        const pct = (val/total*100).toFixed(1);
-        html += \`
-          <div class="bar-label"><span>\${name}</span><span>\${pct}%</span></div>
-          <div class="bar" style="background:\${HEX[name]}; width:\${pct}%"></div>\`;
-      });
-      html += \`<p class="muted"><i>Gesamt-Antworten gezählt: \${total}</i></p>\`;
-      resultDiv.innerHTML = html;
-      resultDiv.style.display = "block";
-
-      return { tally, total };
-    }
-
-    function resetQuizOnly() {
-      document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
-      resultDiv.style.display="none";
-      resultDiv.innerHTML="";
-      sendStatus.innerHTML="";
-    }
-
-    function resetAll() {
-      document.getElementById("name").value="";
-      document.getElementById("age").value="";
-      document.getElementById("email").value="";
-      document.querySelectorAll("input[name='gender']").forEach(r=>r.checked=false);
-      resetQuizOnly();
-      quizStep.style.display="none";
-      resultStep.style.display="none";
-      formStep.style.display="block";
-    }
-
-    // ======================= PDF Generation =======================
-    async function buildPDFDoc(meta, tally, total) {
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF({ unit: "mm", format: "a4" });
-      const pageWidth = doc.internal.pageSize.getWidth();
-
-      // Header
-      doc.setFontSize(16);
-      doc.text("20-Fragen Farbtest – Ergebnis", 14, 18);
-      doc.setFontSize(11);
-      doc.text(\`Name: \${meta.name}\`, 14, 26);
-      doc.text(\`Alter: \${meta.age} | Geschlecht: \${meta.gender}\`, 14, 32);
-      doc.text(\`E-Mail: \${meta.email}\`, 14, 38);
-      const dateStr = new Date().toLocaleString('de-CH');
-      doc.text(\`Datum/Zeit: \${dateStr}\`, 14, 44);
-      doc.setDrawColor(200);
-      doc.line(14, 48, pageWidth-14, 48);
-
-      let y = 60;
-      doc.setFontSize(13);
-      doc.text("Farbprofil", 14, y); y += 6;
-      doc.setFontSize(11);
-      const maxBarW = pageWidth - 14 - 40;
-      const entries = Object.entries(tally);
-      entries.forEach(([name, val]) => {
-        const pct = total ? (val/total*100) : 0;
-        const pctText = pct.toFixed(1) + "%";
-        doc.text(name, 14, y);
-        doc.setFillColor(HEX[name]);
-        const barW = Math.max(1, Math.round(maxBarW * pct / 100));
-        doc.rect(40, y-4.5, barW, 6, "F");
-        doc.text(pctText, 40 + maxBarW + 4, y);
-        y += 10;
-      });
-      y += 2;
-      doc.setFontSize(10);
-      doc.setTextColor(100);
-      doc.text(\`Gesamt-Antworten gezählt: \${total}\`, 14, y); y += 8;
-      doc.setTextColor(0);
-
-      doc.setFontSize(9);
-      doc.setTextColor(90);
-      doc.text("Dieses PDF ist nicht editierbar und enthält keine Formularfelder. Für zusätzliche Schutzmechanismen (Druck/Kopier-Sperren) ist ein Server-Workflow nötig.", 14, 288, { maxWidth: pageWidth-28 });
-      doc.setTextColor(0);
-
-      return doc;
-    }
-
-    function tallySummaryText(tally, total) {
-      const lines = Object.entries(tally).map(([k,v]) => {
-        const pct = total ? ((v/total)*100).toFixed(1) : "0.0";
-        return \`\${k}: \${v} (\${pct}%)\`;
-      });
-      return "Farbprofil\\n" + lines.join("\\n") + "\\nGesamt: " + total;
-    }
-
-    // Send helper for one recipient
-    async function sendEmailWithPDFTo(recipientEmail, recipientName, pdfBase64, summaryText, meta) {
-      const dataUri = "data:application/pdf;base64," + pdfBase64;
-      const templateParams = {
-        to_email: recipientEmail,
-        user_name: recipientName,
-        summary_text: summaryText,
-        pdf_data_uri: dataUri,
-        pdf_base64: pdfBase64,
-        // extra context
-        respondent_email: meta.email,
-        respondent_name: meta.name,
-        respondent_age: meta.age,
-        respondent_gender: meta.gender,
-        attachments: [ { name: "Farbtest_Ergebnis.pdf", data: dataUri } ]
-      };
-      return emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
-    }
-
-    // ======================= Events =======================
-    startBtn.addEventListener("click", () => {
-      const v = validateForm();
-      if (!v.ok) {
-        alert("Bitte korrigiere:\n• " + v.errors.join("\n• "));
-        return;
-      }
-      formStep.style.display = "none";
-      quizStep.style.display = "block";
-      renderQuestions();
-      window.scrollTo({ top: 0, behavior: "smooth" });
+calcBtn?.addEventListener("click", ()=>{
+  let tally = { "Grün":0, "Rot":0, "Blau":0, "Gelb":0 };
+  QUESTIONS.forEach((q,i)=>{
+    document.querySelectorAll(`input[name=q${i}]:checked`).forEach(inp=>{
+      tally[COLORS[inp.value]] += 1;
     });
+  });
+  const total = Object.values(tally).reduce((a,b)=>a+b,0) || 1;
+  let html = `<h2>Dein Farbprofil</h2>`;
+  Object.entries(tally).forEach(([name,val])=>{
+    const pct = (val/total*100).toFixed(1);
+    html += `<div class="bar-label"><span>${name}</span><span>${pct}%</span></div>
+             <div class="bar" style="background:${HEX[name]}; width:${pct}%"></div>`;
+  });
+  html += `<p class="footer-note"><i>Gesamt-Antworten gezählt: ${total}</i></p>`;
+  resultDiv.innerHTML = html;
+  quizStep.style.display="none";
+  resultStep.style.display="block";
+  resultDiv.style.display="block";
+  window.scrollTo({top:0,behavior:"smooth"});
+});
 
-    backBtn.addEventListener("click", () => {
-      quizStep.style.display = "none";
-      formStep.style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
+resetBtn?.addEventListener("click", ()=>{
+  document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
+  resultDiv.innerHTML="";
+  resultDiv.style.display="none";
+});
 
-    calcBtn.addEventListener("click", () => {
-      const result = calculate();
-      quizStep.style.display = "none";
-      resultStep.style.display = "block";
-      resultDiv.style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      resultStep.dataset.tally = JSON.stringify(result.tally);
-      resultStep.dataset.total = String(result.total);
-    });
-
-    resetBtn.addEventListener("click", resetQuizOnly);
-    againBtn.addEventListener("click", resetAll);
-
-    downloadBtn.addEventListener("click", async () => {
-      const meta = validateForm();
-      const tally = JSON.parse(resultStep.dataset.tally || '{"Grün":0,"Rot":0,"Blau":0,"Gelb":0}');
-      const total = parseInt(resultStep.dataset.total || "0", 10);
-      const doc = await buildPDFDoc(meta, tally, total);
-      doc.save("Farbtest_Ergebnis.pdf");
-    });
-
-    emailBtn.addEventListener("click", async () => {
-      const meta = validateForm();
-      if (!meta.ok) {
-        alert("Bitte Formularangaben prüfen.");
-        return;
-      }
-      const tally = JSON.parse(resultStep.dataset.tally || '{"Grün":0,"Rot":0,"Blau":0,"Gelb":0}');
-      const total = parseInt(resultStep.dataset.total || "0", 10);
-      sendStatus.innerHTML = "";
-      try {
-        const doc = await buildPDFDoc(meta, tally, total);
-        const dataUriString = doc.output("datauristring");
-        const base64 = dataUriString.split(",")[1] || "";
-        const summary = tallySummaryText(tally, total);
-
-        if (!emailSendingConfigured()) {
-          throw new Error("EmailJS ist noch nicht konfiguriert. Bitte IDs eintragen (siehe Code-Kommentar).");
-        }
-
-        // 1) an Teilnehmende
-        await sendEmailWithPDFTo(meta.email, meta.name, base64, summary, meta);
-        // 2) Kopie an Andrei (transparent angekündigt)
-        await sendEmailWithPDFTo(OWNER_EMAIL, OWNER_NAME, base64, summary, meta);
-
-        sendStatus.innerHTML = '<div class="success">✅ PDF wurde an <b>' + meta.email + '</b> und an <b>' + OWNER_EMAIL + '</b> gesendet.</div>';
-      } catch (err) {
-        console.error(err);
-        sendStatus.innerHTML = '<div class="error">❌ Versand fehlgeschlagen: ' + (err && err.message ? err.message : 'Unbekannter Fehler') + '</div>';
-      }
-    });
-
-    // Init
-    renderQuestions();
-  </script>
+againBtn?.addEventListener("click", ()=>{
+  document.querySelectorAll("input[type=checkbox]").forEach(c=>c.checked=false);
+  resultDiv.innerHTML="";
+  resultDiv.style.display="none";
+  quizStep.style.display="none";
+  formStep.style.display="block";
+});
+</script>
 </body>
 </html>
